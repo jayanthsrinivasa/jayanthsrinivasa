@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jayanth Srinivasa</title>
+<meta name="description" content="Jayanth Srinivasa, Senior Researcher at Cisco Research. Large language models, LLM agents and applications, and embodied AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: research-notebook two-column — sticky identity rail on the left, a long scrolling record on the right; the Perceive→Understand→Learn→Act loop frames the themes. */
+:root{
+  --bg:#f6f7f8; --surface:#ffffff; --ink:#151a21; --muted:#5a6370; --faint:#8a929d;
+  --rule:#dde1e6; --accent:#2a46b8; --accent-soft:#e6eafa;
+  --t-llm:#2a46b8; --t-agent:#0f7a6c; --t-emb:#a3471b; --t-oth:#5a6370;
+  --f-display:"Schibsted Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1216; --surface:#161a20; --ink:#e7eaee; --muted:#a0a8b3; --faint:#717a86;
+  --rule:#272d36; --accent:#93a6ff; --accent-soft:#1d2440;
+  --t-llm:#93a6ff; --t-agent:#5fd0bd; --t-emb:#f0a07a; --t-oth:#a0a8b3; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1216; --surface:#161a20; --ink:#e7eaee; --muted:#a0a8b3; --faint:#717a86;
+  --rule:#272d36; --accent:#93a6ff; --accent-soft:#1d2440;
+  --t-llm:#93a6ff; --t-agent:#5fd0bd; --t-emb:#f0a07a; --t-oth:#a0a8b3; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit;text-decoration-color:color-mix(in srgb,var(--accent) 45%,transparent);text-underline-offset:3px}
+a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:72px;padding-block:72px 96px}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr);gap:40px;padding-block:40px 64px}}
+
+/* rail */
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 48px);align-self:start;display:flex;flex-direction:column;gap:28px}
+@media (max-width:860px){.rail{position:static}}
+.monogram{width:56px;height:56px;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center;
+  font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:.02em}
+.name{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.role{margin:6px 0 0;color:var(--muted);font-size:16px;line-height:1.45}
+.nav{display:flex;flex-direction:column;gap:2px;font-family:var(--f-display);font-size:14px;font-weight:500}
+.nav a{text-decoration:none;color:var(--muted);padding:5px 0;display:flex;justify-content:space-between;border-bottom:1px solid var(--rule)}
+.nav a:hover{color:var(--accent)}
+.nav .n{font-family:var(--f-mono);font-size:12px;color:var(--faint)}
+@media (max-width:860px){.nav{flex-direction:row;flex-wrap:wrap;gap:6px 18px}.nav a{border:0;padding:0}.nav .n{display:none}}
+.links{display:flex;flex-wrap:wrap;gap:8px 16px;font-family:var(--f-mono);font-size:13px}
+.links a{color:var(--muted)}
+
+/* main */
+main{min-width:0;display:flex;flex-direction:column;gap:88px}
+@media (max-width:860px){main{gap:64px}}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:0 0 14px}
+h2{font-family:var(--f-display);font-weight:600;font-size:26px;letter-spacing:-.005em;margin:0 0 20px;text-wrap:balance}
+.lede{font-size:clamp(22px,2.6vw,28px);line-height:1.35;margin:0 0 24px;max-width:30em;text-wrap:pretty}
+.lede em{font-style:italic;color:var(--accent)}
+.prose{max-width:38em}
+.prose p{margin:0 0 14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:28px}
+.fact{background:var(--surface);padding:16px 18px}
+.fact b{display:block;font-family:var(--f-display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.fact span{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+
+/* loop */
+.loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1.5px solid var(--ink);margin:28px 0 8px}
+.loop div{padding:12px 12px 0 0;font-family:var(--f-mono);font-size:12px;color:var(--muted);position:relative}
+.loop div b{display:block;font-family:var(--f-display);font-size:15px;color:var(--ink);font-weight:600}
+.loop div::before{content:"";position:absolute;top:-5.5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1.5px solid var(--ink)}
+@media (max-width:560px){.loop{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}}
+.themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+@media (max-width:980px){.themes{grid-template-columns:minmax(0,1fr);gap:28px}}
+.theme h3{font-family:var(--f-display);font-weight:600;font-size:18px;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+.theme h3 i{width:10px;height:10px;border-radius:2px;flex:none}
+.theme p{margin:0 0 10px;font-size:16px;color:var(--ink)}
+.theme ul{margin:0;padding:0;list-style:none;font-family:var(--f-mono);font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.theme ul li::before{content:"→ ";color:var(--faint)}
+
+/* filters */
+.head-row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.head-row h2{margin:0}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 28px}
+.chip{font:500 13px var(--f-display);border:1px solid var(--rule);background:var(--surface);color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--muted))}
+.chip:hover{border-color:var(--muted);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* records */
+.year{display:grid;grid-template-columns:72px minmax(0,1fr);gap:20px;border-top:1px solid var(--rule);padding-top:18px;margin-top:18px}
+.year:first-of-type{margin-top:0}
+@media (max-width:560px){.year{grid-template-columns:minmax(0,1fr);gap:8px}}
+.year > h3{font-family:var(--f-mono);font-weight:500;font-size:14px;color:var(--faint);margin:2px 0 0;font-variant-numeric:tabular-nums}
+.items{display:flex;flex-direction:column;gap:20px;min-width:0}
+.item{display:grid;grid-template-columns:3px minmax(0,1fr);gap:14px}
+.item .bar{border-radius:2px;background:var(--c)}
+.item .t{font-family:var(--f-display);font-weight:600;font-size:16.5px;line-height:1.35;margin:0;text-wrap:pretty}
+.item .t a{text-decoration:none}
+.item .t a:hover{text-decoration:underline}
+.item .au{font-size:15px;color:var(--muted);margin:3px 0 0}
+.item .au b{color:var(--ink);font-weight:600}
+.meta{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);margin-top:5px;display:flex;flex-wrap:wrap;gap:4px 14px}
+.meta .v{color:var(--ink)}
+.item .sum{font-size:15px;margin:5px 0 0;color:var(--ink)}
+.spec{margin:24px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;border-top:1px solid var(--rule)}
+@media (max-width:640px){.spec{grid-template-columns:minmax(0,1fr)}}
+.spec div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.spec dt{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);padding-top:2px}
+.spec dd{margin:0;font-size:15.5px}
+.kind{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.empty{color:var(--muted);font-style:italic}
+
+footer{border-top:1px solid var(--rule);padding-top:20px;font-family:var(--f-mono);font-size:12.5px;color:var(--faint);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="rail">
+    <div class="monogram" aria-hidden="true">JS</div>
+    <div>
+      <h1 class="name">Jayanth Srinivasa</h1>
+      <p class="role">Senior Researcher<br>Cisco Research · California</p>
+    </div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About <span class="n">§1</span></a>
+      <a href="#research">Research areas <span class="n">§2</span></a>
+      <a href="#focus">Embodied AI <span class="n">§3</span></a>
+      <a href="#publications">Publications <span class="n">49</span></a>
+      <a href="#projects">Prototypes &amp; open source <span class="n">5</span></a>
+      <a href="#patents">Patents <span class="n">6</span></a>
+    </nav>
+    <div class="links"></div>
+  </aside>
+
+  <main>
+    <section id="about">
+      <p class="eyebrow">About</p>
+      <p class="lede">At Cisco Research, I work on LLM applications, LLM post-training and RL, and, more recently, embodied AI.</p>
+      <div class="prose">
+        <p>Cisco Research looks a few years ahead. We work with emerging technology and bring what we learn back to Cisco to shape future products. Part of that work is building prototypes: some stay internal to Cisco, and some are released as open source for use outside the company.</p>
+        <p>My work has two parts. One is applications of LLMs: agents, tool use, and systems built for real tasks. The other is making the models themselves better after pretraining, through post-training and reinforcement learning. <a href="https://arxiv.org/abs/2603.18953">Context Bootstrapped Reinforcement Learning</a> is a recent example. Much of this work is done with academic collaborators at UCLA, CMU, UC San Diego and Purdue.</p>
+        <p>Embodied AI is a newer area for me. I'm working hands-on with a Mobile ALOHA mobile manipulator: collecting demonstrations through VR teleoperation, and running imitation-learning and vision-language-action policies such as ACT and π0.5 on the robot. On the research side, with collaborators at Purdue, I presented a late-breaking results poster at IROS 2026 on a model-agnostic agentic framework for long-horizon robot navigation and planning. The question that links this back to my LLM work is how far models trained on language and images can get when they have to act in a physical setting.</p>
+        <p>I've been at Cisco for 18 years, moving from hardware engineering to software, then technical leadership, and then research. I hold an M.S. in Electrical Engineering: Systems from the University of Michigan and a Master of Information and Data Science from UC Berkeley.</p>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>18</b><span>years at Cisco</span></div>
+        <div class="fact"><b>49</b><span>publications</span></div>
+        <div class="fact"><b>6</b><span>granted U.S. patents</span></div>
+      </div>
+    </section>
+
+    <section id="research">
+      <p class="eyebrow">Research areas</p>
+      <h2>What I work on</h2>
+      <div class="themes">
+        <div class="theme">
+          <h3><i style="background:var(--t-agent)"></i>LLM agents and applications</h3>
+          <p>Agents that plan and call tools, multi-agent systems, and serving infrastructure for agentic workloads, often tested on Cisco problems such as log analysis and network diagnosis.</p>
+          <ul><li>tool use and multi-agent systems</li><li>agent serving</li><li>AI for research and data science</li></ul>
+        </div>
+        <div class="theme">
+          <h3><i style="background:var(--t-llm)"></i>Post-training and RL for LLMs</h3>
+          <p>Improving model performance after pretraining with reinforcement learning, including how training context and reward design affect what a model learns. Related work covers reasoning and safety.</p>
+          <ul><li>RL for LLMs (CBRL, self-play RL)</li><li>reasoning and safety</li><li>evaluation</li></ul>
+        </div>
+        <div class="theme">
+          <h3><i style="background:var(--t-emb)"></i>Embodied AI</h3>
+          <p>A newer area: vision-language-action models for mobile manipulation, and agentic frameworks for long-horizon robot navigation and planning.</p>
+          <ul><li>VLA models</li><li>imitation learning</li><li>long-horizon planning</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="focus">
+      <p class="eyebrow">New area</p>
+      <h2>Embodied AI</h2>
+      <div class="prose">
+        <p>Embodied AI is a newer direction for me. I'm exploring how well current vision-language-action models carry over to real hardware, and what it takes to collect data and run them reliably. The working platform is a Mobile ALOHA bimanual mobile manipulator, which we use for demonstrations and experiments.</p>
+      </div>
+      <div class="loop" aria-label="Perceive, understand, learn, act">
+        <div><b>Perceive</b>cameras, scene state</div>
+        <div><b>Understand</b>language instructions</div>
+        <div><b>Learn</b>demonstrations, fine-tuning</div>
+        <div><b>Act</b>arm and base control</div>
+      </div>
+      <dl class="spec">
+        <div><dt>Robot</dt><dd>Mobile ALOHA, Interbotix arms</dd></div>
+        <div><dt>Software</dt><dd>ROS 2 Humble, Docker, Isaac Sim</dd></div>
+        <div><dt>Data collection</dt><dd>VR teleoperation with Meta Quest 3, joint-space control</dd></div>
+        <div><dt>Policies</dt><dd>ACT imitation learning; π0 and π0.5 VLA models via openpi</dd></div>
+        <div><dt>Compute</dt><dd>Remote policy inference on NVIDIA DGX Spark</dd></div>
+        <div><dt>Open questions</dt><dd>Sim-to-real transfer, cross-embodiment, evaluation on real tasks</dd></div>
+      </dl>
+    </section>
+
+    <section id="publications">
+      <p class="eyebrow">Publications</p>
+      <div class="head-row"><h2>Papers, newest first</h2><span class="count" id="pubcount" aria-live="polite">49 papers</span></div>
+      <div class="filters" role="group" aria-label="Filter by theme">
+        <button class="chip" type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" id="f-llm" data-f="llm" aria-pressed="false" style="--c:var(--t-llm)"><i></i>LLMs</button>
+        <button class="chip" type="button" id="f-agent" data-f="agent" aria-pressed="false" style="--c:var(--t-agent)"><i></i>Agents &amp; applications</button>
+        <button class="chip" type="button" id="f-emb" data-f="emb" aria-pressed="false" style="--c:var(--t-emb)"><i></i>Embodied AI &amp; vision</button>
+        <button class="chip" type="button" id="f-oth" data-f="oth" aria-pressed="false" style="--c:var(--t-oth)"><i></i>Other ML</button>
+      </div>
+      <div id="publist"><div class="year"><h3>2026</h3><div class="items"><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://neurips.cc/virtual/2026/poster/154119">TIER: Trajectory-Invariant Execution Rewards for Multi-Step Tool Composition</a></p><p class="au">Anay Kulkarni, ChiaEn (Allen) Lu, Dheeraj Mekala, <b>Jayanth Srinivasa</b>, Gaowen Liu, Jingbo Shang</p><div class="meta"><span class="v">NeurIPS 2026</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2605.22217">Survive or Collapse: The Asymmetric Roles of Data Gating and Reward Grounding in Self-Play RL</a></p><p class="au">Sophia Xiao Pu, Zhaotian Weng, Chengzhi Liu, <b>Jayanth Srinivasa</b>, Gaowen Liu, William Yang Wang, Xin Eric Wang</p><div class="meta"><span class="v">NeurIPS 2026</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2605.09044">Predicting Plasticity in Deep Continual Learning: A Theoretical Perspective</a></p><p class="au">Jiuqi Wang, <b>Jayanth Srinivasa</b>, Claire Chen, Shuze Daniel Liu, Ali Payani, Shangtong Zhang</p><div class="meta"><span class="v">NeurIPS 2026</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2609.35609">Twist, Don&#x27;t Tilt: Trajectory-Exact Constrained Decoding for Masked Diffusion Models</a></p><p class="au">Aditya Thimmaiah, Lara Marinov, <b>Jayanth Srinivasa</b>, Haris Vikalo, Junyi Jessy Li, Milos Gligoric</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2609.10397">Retrofitting Code Using LLMs to Support Exceptional Behavior</a></p><p class="au">Linghan Zhong, Jiyang Zhang, <b>Jayanth Srinivasa</b>, Junyi Jessy Li, Milos Gligoric</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2609.03894">CROCODIL: Cross-Model Code Editing with LLMs</a></p><p class="au">Linghan Zhong, Aditya Thimmaiah, <b>Jayanth Srinivasa</b>, Milos Gligoric, Junyi Jessy Li</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2609.00579">Predicting Program Exit Code with LLMs and Programming Language Semantics</a></p><p class="au">Lara Marinov, Aditya Thimmaiah, <b>Jayanth Srinivasa</b>, Junyi Jessy Li, Milos Gligoric</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="emb" style="--c:var(--t-emb)"><span class="bar"></span><div><p class="t">Model Agnostic Agentic Framework for Long-Horizon Robotic Navigation and Planning</p><p class="au">Aathman Tharmasanthiran, <b>Jayanth Srinivasa</b>, Akshay Jajoo, Upinder Kaur</p><div class="meta"><span class="v">IROS 2026, Late Breaking Results (poster)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2608.30147">CAST: Critique-Aware Supervision for Training Reliable Long-Horizon Tool-Calling Agents</a></p><p class="au">Amir Saeidi, Zehua Zhang, Rishitosh Singh, Naman Ahuja, Vivek Gupta, Ali Payani, Gaowen Liu, <b>Jayanth Srinivasa</b>, Chitta Baral</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=8xH4BQ8J6Y">LLMs Lean on Priors, Not Programming Language Semantics</a></p><p class="au">Aditya Thimmaiah, Jiyang Zhang, <b>Jayanth Srinivasa</b>, Junyi Jessy Li, Milos Gligoric</p><div class="meta"><span class="v">ICML 2026</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2026.acl-long.771/">Bidirectional LMs are Better Knowledge Memorizers? A Benchmark for Real-world Knowledge Injection</a></p><p class="au">Yuwei Zhang, Wenhao Yu, Shangbin Feng, Yifan Zhu, Letian Peng, <b>Jayanth Srinivasa</b>, Gaowen Liu, Jingbo Shang</p><div class="meta"><span class="v">ACL 2026 (Long)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2026.findings-acl.1716/">FAMA: Failure-Aware Meta-Agentic Framework for Open-Source LLMs in Interactive Tool Use Environments</a></p><p class="au">Amir Saeidi, Venkatesh Mishra, Souradeep Mukhopadhyay, Gaowen Liu, Ali Payani, <b>Jayanth Srinivasa</b>, Chitta Baral</p><div class="meta"><span class="v">ACL 2026 Findings</span></div></div></article><article class="item" data-t="emb" style="--c:var(--t-emb)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2605.09826">EnactToM: An Evolving Benchmark for Functional Theory of Mind in Embodied Agents</a></p><p class="au">Gurusha Juneja, Dylan Lu, Saaket Agashe, Parth Diwane, Edward Gunn, <b>Jayanth Srinivasa</b>, Gaowen Liu, William Yang Wang, Yali Du, Xin Eric Wang</p><div class="meta"><span class="v">ICML 2026 Workshop (Trustworthy AI for Good)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=KjgyAm383Z">EXP-Bench: Can AI Conduct AI Research Experiments?</a></p><p class="au">Patrick Tser Jern Kon, Qiuyi Ding, Jiachen Liu, Xinyi Zhu, Jingjia Peng, Jiarong Xing, Yibo Huang, Yiming Qiu, <b>Jayanth Srinivasa</b>, Myungjin Lee, Mosharaf Chowdhury, Matei Zaharia, Ang Chen</p><div class="meta"><span class="v">ICLR 2026</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://proceedings.mlr.press/v328/zhao26b.html">Sparse Mixture-of-Experts for Compositional Generalization: Empirical Evidence and Theoretical Foundations of Optimal Sparsity</a></p><p class="au">Jinze Zhao, Peihao Wang, Junjie Yang, Ruisi Cai, Gaowen Liu, <b>Jayanth Srinivasa</b>, Ramana Rao Kompella, Yingbin Liang, Zhangyang Wang</p><div class="meta"><span class="v">CPAL 2026 (PMLR v328)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2603.19005">AgentDS Technical Report: Benchmarking the Future of Human-AI Collaboration in Domain-Specific Data Science</a></p><p class="au">An Luo, Jin Du, Xun Xian, Robert Specht, Fangqiao Tian, Ganghua Wang, Xuan Bi, Charles Fleming, Ashish Kundu, <b>Jayanth Srinivasa</b>, Mingyi Hong, Rui Zhang, Tianxi Li, Galin Jones, Jie Ding</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2603.18953">Context Bootstrapped Reinforcement Learning</a></p><p class="au">Saaket Agashe, <b>Jayanth Srinivasa</b>, Gaowen Liu, Ramana Kompella, Xin Eric Wang</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2601.05109">Nalar: Workflow-Aware Management of Agentic Applications</a></p><p class="au">Saurabh Agarwal, Nitin Kedia, Marco Laju, Myungjin Lee, Aditya Akella, Donghyun Son, <b>Jayanth Srinivasa</b></p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2601.03197">Software-Defined Agentic Serving</a></p><p class="au">Saurabh Agarwal, Marco Laju, <b>Jayanth Srinivasa</b>, Myungjin Lee, Aditya Akella</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article></div></div><div class="year"><h3>2025</h3><div class="items"><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2512.10990">Dora: QoE-Aware Hybrid Parallelism for Distributed Edge AI</a></p><p class="au">Jianli Jin, Ziyang Lin, Qianli Dong, Yi Chen, <b>Jayanth Srinivasa</b>, Myungjin Lee, Zhaowei Tan, Fan Lai</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2512.20959">Can Agentic AI Match the Performance of Human Data Scientists?</a></p><p class="au">An Luo, Jin Du, Fangqiao Tian, Xun Xian, Robert Specht, Ganghua Wang, Xuan Bi, Charles Fleming, <b>Jayanth Srinivasa</b>, Ashish Kundu, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2025.ijcnlp-long.173/">The Hidden Risks of Large Reasoning Models: A Safety Assessment of R1</a></p><p class="au">Kaiwen Zhou, Chengzhi Liu, Xuandong Zhao, Shreedhar Jangam, <b>Jayanth Srinivasa</b>, Gaowen Liu, Dawn Song, Xin Eric Wang</p><div class="meta"><span class="v">IJCNLP-AACL 2025 (Long)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2025.emnlp-main.1291/">SafeKey: Amplifying Aha-Moment Insights for Safety Reasoning</a></p><p class="au">Kaiwen Zhou, Xuandong Zhao, <b>Jayanth Srinivasa</b>, Gaowen Liu, Aosong Feng, Dawn Song, Xin Eric Wang</p><div class="meta"><span class="v">EMNLP 2025 (Main)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2025.findings-emnlp.1250/">How Can Input Reformulation Improve Tool Usage Accuracy in a Complex Dynamic Environment? A Study on tau-bench</a></p><p class="au">Venkatesh Mishra, Amir Saeidi, Satyam Raj, Mutsumi Nakamura, Gaowen Liu, Ali Payani, <b>Jayanth Srinivasa</b>, Chitta Baral</p><div class="meta"><span class="v">EMNLP 2025 Findings</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2025.findings-emnlp.979/">AssistedDS: Benchmarking How External Domain Knowledge Assists LLMs in Automated Data Science</a></p><p class="au">An Luo, Xun Xian, Jin Du, Fangqiao Tian, Ganghua Wang, Ming Zhong, Shengchun Zhao, Xuan Bi, Zirui Liu, Jiawei Zhou, <b>Jayanth Srinivasa</b>, Ashish Kundu, Charles Fleming, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">EMNLP 2025 Findings</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=SOMDiaGoil">On the Vulnerability of Applying Retrieval-Augmented Generation within Knowledge-Intensive Application Domains</a></p><p class="au">Xun Xian, Ganghua Wang, Xuan Bi, Rui Zhang, <b>Jayanth Srinivasa</b>, Ashish Kundu, Charles Fleming, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">ICML 2025</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2506.23083">Model-Based Diagnosis: Automating End-to-End Diagnosis of Network Failures</a></p><p class="au">Changrong Wu, Yiyao Yu, Myungjin Lee, <b>Jayanth Srinivasa</b>, Ennan Zhai, George Varghese, Yuval Tamir</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2505.18397">An Outlook on the Opportunities and Challenges of Multi-Agent AI Systems</a></p><p class="au">Fangqiao Tian, An Luo, Jin Du, Xun Xian, Robert Specht, Ganghua Wang, Xuan Bi, Jiawei Zhou, <b>Jayanth Srinivasa</b>, Ashish Kundu, Charles Fleming, Rui Zhang, Zirui Liu, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2505.07833">Harmonia: End-to-End RAG Serving Optimization</a></p><p class="au">Saurabh Agarwal, Bodun Hu, Luis Pabon, Myungjin Lee, <b>Jayanth Srinivasa</b>, Aditya Akella</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2025.findings-naacl.435/">Investigating the Shortcomings of LLMs in Step-by-Step Legal Reasoning</a></p><p class="au">Venkatesh Mishra, Bimsara Pathiraja, Mihir Parmar, Sat Chidananda, <b>Jayanth Srinivasa</b>, Gaowen Liu, Ali Payani, Chitta Baral</p><div class="meta"><span class="v">NAACL 2025 Findings</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2504.07079">SkillWeaver: Web Agents can Self-Improve by Discovering and Honing Skills</a></p><p class="au">Boyuan Zheng, Michael Y. Fatemi, Xiaolong Jin, Zora Zhiruo Wang, Apurva Gandhi, Yueqi Song, Yu Gu, <b>Jayanth Srinivasa</b>, Gaowen Liu, Graham Neubig, Yu Su</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2503.09819">Attention Reveals More Than Tokens: Training-Free Long-Context Reasoning with Attention-guided Retrieval</a></p><p class="au">Yuwei Zhang, <b>Jayanth Srinivasa</b>, Gaowen Liu, Jingbo Shang</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2502.16069">Curie: Toward Rigorous and Automated Scientific Experimentation with AI Agents</a></p><p class="au">Patrick Tser Jern Kon, Jiachen Liu, Qiuyi Ding, Yiming Qiu, Zhenning Yang, Yibo Huang, <b>Jayanth Srinivasa</b>, Myungjin Lee, Mosharaf Chowdhury, Ang Chen</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article></div></div><div class="year"><h3>2024</h3><div class="items"><article class="item" data-t="emb" style="--c:var(--t-emb)"><span class="bar"></span><div><p class="t"><a href="https://arxiv.org/abs/2412.06780">Diverse Score Distillation</a></p><p class="au">Yanbo Xu, <b>Jayanth Srinivasa</b>, Gaowen Liu, Shubham Tulsiani</p><div class="meta"><span class="v">arXiv preprint</span></div></div></article><article class="item" data-t="emb" style="--c:var(--t-emb)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=ogaeChzbKu">RAW: A Robust and Agile Plug-and-Play Watermark Framework for AI-Generated Images with Provable Guarantees</a></p><p class="au">Xun Xian, Ganghua Wang, Xuan Bi, <b>Jayanth Srinivasa</b>, Ashish Kundu, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">NeurIPS 2024</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2024.emnlp-main.436/">Middleware for LLMs: Tools Are Instrumental for Language Agents in Complex Environments</a></p><p class="au">Yu Gu, Yiheng Shu, Hao Yu, Xiao Liu, Yuxiao Dong, Jie Tang, <b>Jayanth Srinivasa</b>, Hugo Latapie, Yu Su</p><div class="meta"><span class="v">EMNLP 2024 (Main)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2024.emnlp-main.841/">Open-world Multi-label Text Classification with Extremely Weak Supervision</a></p><p class="au">Xintong Li, Jinya Jiang, Ria Dharmani, <b>Jayanth Srinivasa</b>, Gaowen Liu, Jingbo Shang</p><div class="meta"><span class="v">EMNLP 2024 (Main)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2024.findings-acl.758/">Argument-Aware Approach To Event Linking</a></p><p class="au">I-Hung Hsu, Zihan Xue, Nilay Pochhi, Sahil Bansal, Prem Natarajan, <b>Jayanth Srinivasa</b>, Nanyun Peng</p><div class="meta"><span class="v">ACL 2024 Findings</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2024.acl-long.27/">Answer is All You Need: Instruction-following Text Embedding via Answering the Question</a></p><p class="au">Letian Peng, Yuwei Zhang, Zilong Wang, <b>Jayanth Srinivasa</b>, Gaowen Liu, Zihan Wang, Jingbo Shang</p><div class="meta"><span class="v">ACL 2024 (Long)</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=7DbIyQlfaO">Characterizing Truthfulness in Large Language Model Generations with Local Intrinsic Dimension</a></p><p class="au">Fan Yin, <b>Jayanth Srinivasa</b>, Kai-Wei Chang</p><div class="meta"><span class="v">ICML 2024</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2024.lrec-main.532/">Enhancing Large Language Models through Transforming Reasoning Problems into Classification Tasks</a></p><p class="au">Tarun Raheja, Raunak Sinha, Advit Deepak, Will Healy, <b>Jayanth Srinivasa</b>, Myungjin Lee, Ramana Kompella</p><div class="meta"><span class="v">LREC-COLING 2024</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=BPHcEpGvF8">Demystifying Poisoning Backdoor Attacks from a Statistical Perspective</a></p><p class="au">Ganghua Wang, Xun Xian, Ashish Kundu, <b>Jayanth Srinivasa</b>, Xuan Bi, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">ICLR 2024</span></div></div></article></div></div><div class="year"><h3>2023</h3><div class="items"><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=K9xHDD6mic">Graph Mixture of Experts: Learning on Large-Scale Graphs with Explicit Diversity Modeling</a></p><p class="au">Haotao Wang, Ziyu Jiang, Yuning You, Yan Han, Gaowen Liu, <b>Jayanth Srinivasa</b>, Ramana Kompella, Zhangyang Wang</p><div class="meta"><span class="v">NeurIPS 2023</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=4zWEyYGGfI">A Unified Detection Framework for Inference-Stage Backdoor Defenses</a></p><p class="au">Xun Xian, Ganghua Wang, <b>Jayanth Srinivasa</b>, Ashish Kundu, Xuan Bi, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">NeurIPS 2023</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://doi.org/10.1145/3583780.3614769">A Retrieve-and-Read Framework for Knowledge Graph Link Prediction</a></p><p class="au">Vardaan Pahuja, Boshi Wang, Hugo Latapie, <b>Jayanth Srinivasa</b>, Yu Su</p><div class="meta"><span class="v">CIKM 2023</span></div></div></article><article class="item" data-t="llm" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://aclanthology.org/2023.acl-short.117/">Text-to-SQL Error Correction with Language Models of Code</a></p><p class="au">Ziru Chen, Shijie Chen, Michael White, Raymond Mooney, Ali Payani, <b>Jayanth Srinivasa</b>, Yu Su, Huan Sun</p><div class="meta"><span class="v">ACL 2023 (Short)</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=D-wqUKp8wB">Understanding Backdoor Attacks through the Adaptability Hypothesis</a></p><p class="au">Xun Xian, Ganghua Wang, <b>Jayanth Srinivasa</b>, Ashish Kundu, Xuan Bi, Mingyi Hong, Jie Ding</p><div class="meta"><span class="v">ICML 2023</span></div></div></article><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://mlanthology.org/cvprw/2023/cai2023cvprw-manytask/">Many-Task Federated Learning: A New Problem Setting and A Simple Baseline</a></p><p class="au">Ruisi Cai, Xiaohan Chen, Shiwei Liu, <b>Jayanth Srinivasa</b>, Myungjin Lee, Ramana Kompella, Zhangyang Wang</p><div class="meta"><span class="v">CVPR 2023 Workshops</span></div></div></article></div></div><div class="year"><h3>2021</h3><div class="items"><article class="item" data-t="oth" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://openreview.net/forum?id=3H5az1ySm1">A Metamodel and Framework for Artificial General Intelligence From Theory to Practice</a></p><p class="au">Hugo Latapie, Ozkan Kilic, Gaowen Liu, Ramana Kompella, Adam Lawrence, Yuhong Sun, <b>Jayanth Srinivasa</b>, Yan Yan, Pei Wang, Kristinn R. Thorisson</p><div class="meta"><span class="v">Journal of Artificial Intelligence and Consciousness</span></div></div></article></div></div></div>
+    </section>
+
+    <section id="projects">
+      <p class="eyebrow">Prototypes &amp; open source</p>
+      <div class="head-row"><h2>Selected projects</h2></div>
+      <p class="prose" style="margin:0 0 24px;color:var(--muted)">Prototypes are part of the research. Some stay internal to Cisco; others are released as open source. These are the public ones, plus the robotics testbed.</p>
+      <div class="items"><article class="item" style="--c:var(--t-agent)"><span class="bar"></span><div><span class="kind">Open source</span><p class="t"><a href="https://github.com/cisco-open/lion">LION</a></p><p class="sum">Conversational log analysis. Unsupervised methods narrow large logs to the few lines that matter, then an LLM answers questions using those lines as context.</p><div class="meta"><span>github.com/cisco-open/lion</span></div></div></article><article class="item" style="--c:var(--t-llm)"><span class="bar"></span><div><span class="kind">Open source</span><p class="t"><a href="https://github.com/cisco-open/Blaze">Blaze</a></p><p class="sum">Builds natural language understanding pipelines from modular components, and benchmarks and compares pipelines on standard datasets.</p><div class="meta"><span>github.com/cisco-open/Blaze</span></div></div></article><article class="item" style="--c:var(--t-agent)"><span class="bar"></span><div><span class="kind">Open source</span><p class="t"><a href="https://github.com/cisco-open/buffalo">BUFFALO</a></p><p class="sum">An enterprise gateway for LLMs. It sits between users and models to address data privacy and security, cost from redundant queries, hallucinations and explainability.</p><div class="meta"><span>github.com/cisco-open/buffalo</span></div></div></article><article class="item" style="--c:var(--t-llm)"><span class="bar"></span><div><span class="kind">Prototype, 2019</span><p class="t"><a href="https://www.ischool.berkeley.edu/projects/2019/supermod">SuperMod</a></p><p class="sum">Flags toxic language in a drafted email or message so the sender can revise it before sending. UC Berkeley MIDS capstone.</p><div class="meta"><span>ischool.berkeley.edu</span></div></div></article><article class="item" style="--c:var(--t-emb)"><span class="bar"></span><div><span class="kind">Prototype</span><p class="t">Mobile ALOHA embodied AI testbed</p><p class="sum">A bimanual mobile manipulator set up for teleoperated data collection and for running imitation-learning and vision-language-action policies on real tasks.</p><div class="meta"><span>ROS 2 · VR teleoperation · π0.5</span></div></div></article></div>
+    </section>
+
+    <section id="patents">
+      <p class="eyebrow">Patents</p>
+      <div class="head-row"><h2>Granted U.S. patents</h2><span class="count">by grant date, newest first</span></div>
+      <div><div class="items"><article class="item" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://patents.justia.com/patent/12743632">Debugging in federated learning systems</a></p><p class="sum">When a federated-learning global model degrades, pick a trainer node to emit debugging metrics and flag it as the likely root cause.</p><div class="meta"><span class="v">US 12,743,632</span><span>Granted Sep 22, 2026</span><span>With Myungjin Lee, Ramana Rao V. R. Kompella</span></div></div></article><article class="item" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://patents.justia.com/patent/12725048">Efficient scaling of partitioned neural network inference</a></p><p class="sum">Find the bottleneck partition of a split neural network, replicate it on another device, and multiplex outputs to the next partition.</p><div class="meta"><span class="v">US 12,725,048</span><span>Granted Sep 1, 2026</span><span>With Myungjin Lee, Ali Payani, Ramana Rao V. R. Kompella</span></div></div></article><article class="item" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://patents.justia.com/patent/12688221">Creating explainable summaries of text documents with controllable levels of detail</a></p><p class="sum">Build document summaries from segments weighted by user-set relevance parameters, showing how much each segment contributed.</p><div class="meta"><span class="v">US 12,688,221</span><span>Granted Jul 21, 2026</span><span>With Ali Payani, Ramana Rao V. R. Kompella</span></div></div></article><article class="item" style="--c:var(--t-oth)"><span class="bar"></span><div><p class="t"><a href="https://patents.justia.com/patent/12646319">Automatic labeling and event detection for video analytics using hybrid AI</a></p><p class="sum">Represent objects in video clips as keypoint time series and use constraint-based (neuro-symbolic) checks to auto-label clips for a requested event class.</p><div class="meta"><span class="v">US 12,646,319</span><span>Granted Jun 2, 2026</span><span>With Hugo Latapie, Enzo Fenoglio, Viktoriya V. Tsukanova, Ramana Rao V. R. Kompella et al.</span></div></div></article><article class="item" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://patents.justia.com/patent/12639511">Memory-based function calling for logical formulation and inference for large language models</a></p><p class="sum">An LLM parses a constraint-satisfaction problem; logical primitive functions store constraints in memory and a solver checks each answer choice.</p><div class="meta"><span class="v">US 12,639,511</span><span>Granted May 26, 2026</span><span>With Tarun Raheja, Advit Deepak, William Healy, Gaowen Liu et al.</span></div></div></article><article class="item" style="--c:var(--t-llm)"><span class="bar"></span><div><p class="t"><a href="https://patents.justia.com/patent/12572536">Cache-generated frequently asked questions page</a></p><p class="sum">Semantic cache of Q&amp;A pairs: embed incoming queries, return a cached answer above a similarity threshold, else call an LLM (and build an FAQ page).</p><div class="meta"><span class="v">US 12,572,536</span><span>Granted Mar 10, 2026</span><span>With Tarun Raheja, Raunak Sinha, Will Healy, Advit Deepak et al.</span></div></div></article></div></div>
+    </section>
+
+    <footer><span>Jayanth Srinivasa · Cisco Research</span><span>Updated October 2026</span></footer>
+  </main>
+</div>
+
+<script>
+(function(){
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var items=[].slice.call(document.querySelectorAll('#publist .item'));
+  var years=[].slice.call(document.querySelectorAll('#publist .year'));
+  var count=document.getElementById('pubcount');
+  function apply(f){
+    chips.forEach(function(c){c.setAttribute('aria-pressed',String(c.dataset.f===f))});
+    var n=0;
+    items.forEach(function(it){var on=f==='all'||it.dataset.t===f;it.hidden=!on;if(on)n++});
+    years.forEach(function(y){y.hidden=!y.querySelector('.item:not([hidden])')});
+    count.textContent=n+(n===1?' paper':' papers');
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){apply(c.dataset.f)})});
+})();
+</script>
+
+</body>
+</html>
